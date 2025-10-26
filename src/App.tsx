@@ -24,11 +24,11 @@ const projectsData = [
     },
     {
         imageSrc: "https://ideogram.ai/assets/progressive-image/balanced/response/gQUOqDaxRNK7-kecEdGS8Q",
-        title: "E-commerce Platform",
+        title: "Book Store E-commerce Platform",
         description: "Built a full-stack e-commerce solution with features like product management, shopping cart, and secure payment gateway integration.",
         linkText: "View on Github",
         category: "Web App",
-        linkURL: ""
+        linkURL: "https://github.com/Shubham0202/book_store"
     },
     {
         imageSrc: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1974&auto=format&fit=crop",
