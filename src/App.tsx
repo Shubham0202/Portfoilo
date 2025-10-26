@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import {
-    ArrowRightIcon,
-    BrandIcon1, BrandIcon2, BrandIcon3, BrandIcon4, BrandIcon5, BrandIcon6, BrandIcon7, BrandIcon8,
-    ContactIcon, GithubIcon, LinkedInIcon, SparkleIcon, TwitterIcon
+    ArrowRightIcon,ContactIcon, GithubIcon, LinkedInIcon, SparkleIcon, TwitterIcon
 } from './components/icons';
 
 // --- Data ---
