@@ -385,7 +385,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
     return (
         <header className="py-6 px-4 sm:px-8 lg:px-16 absolute top-0 left-0 right-0 z-20">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
-                <h1 className="text-2xl font-bold cursor-pointer" onClick={() => onNavigate('home')}>Folioblox</h1>
+                <h1 className="text-2xl font-bold cursor-pointer" onClick={() => onNavigate('home')}>Portfolio</h1>
                 <nav className="hidden md:flex items-center space-x-8">
                     {navItems.map(item => (
                         <button key={item} onClick={() => onNavigate(item.toLowerCase())}
