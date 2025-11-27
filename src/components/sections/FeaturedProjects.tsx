@@ -25,7 +25,8 @@ const FeaturedProjects: React.FC = () => {
             stagger: 0.2,
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 80%",
+                start: "top 85%",
+                toggleActions: "play none none reverse"
             }
         });
     }, { scope: containerRef });

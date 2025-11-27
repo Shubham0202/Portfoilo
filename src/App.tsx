@@ -8,6 +8,7 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Projects = lazy(() => import('./pages/Projects'));
 const Contact = lazy(() => import('./pages/Contact'));
+const ThankYou = lazy(() => import('./pages/ThankYou'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const LoadingFallback = () => (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                             <Route path="/about" element={<About />} />
                             <Route path="/projects" element={<Projects />} />
                             <Route path="/contact" element={<Contact />} />
+                            <Route path="/thank-you" element={<ThankYou />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </Suspense>

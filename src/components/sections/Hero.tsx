@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero: React.FC = () => {
     const containerRef = useRef<HTMLElement>(null);
@@ -8,7 +11,14 @@ const Hero: React.FC = () => {
     const imageRef = useRef<HTMLImageElement>(null);
 
     useGSAP(() => {
-        const tl = gsap.timeline();
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top top",
+                end: "bottom top",
+                toggleActions: "play none none reverse"
+            }
+        });
 
         tl.from(textRef.current?.children || [], {
             y: 50,

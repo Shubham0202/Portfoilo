@@ -11,14 +11,19 @@ const WorkExperience: React.FC = () => {
     const listRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        gsap.from(listRef.current?.children || [], {
-            x: -50,
-            opacity: 0,
+        const items = Array.from(listRef.current?.children || []);
+
+        gsap.set(items, { opacity: 0, x: -50 });
+
+        gsap.to(items, {
+            x: 0,
+            opacity: 1,
             duration: 0.8,
             stagger: 0.2,
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 75%",
+                start: "top 85%",
+                toggleActions: "play none none reverse"
             }
         });
     }, { scope: containerRef });

@@ -11,15 +11,21 @@ const SkillsSection: React.FC = () => {
     const skillsRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        gsap.from(skillsRef.current?.children || [], {
-            scale: 0.8,
-            opacity: 0,
+        const skills = Array.from(skillsRef.current?.children || []);
+
+        gsap.set(skills, { opacity: 0, y: 20, scale: 0.9 });
+
+        gsap.to(skills, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
             duration: 0.5,
             stagger: 0.05,
-            ease: "back.out(1.7)",
+            ease: "back.out(1.2)",
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 80%",
+                start: "top 85%",
+                toggleActions: "play none none reverse"
             }
         });
     }, { scope: containerRef });
