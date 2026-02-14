@@ -1,43 +1,81 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Layout/Header';
-import Footer from './components/Layout/Footer';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+import Hero from './sections/Hero';
+import About from './sections/About';
+import Experience from './sections/Experience';
+import Projects from './sections/Projects';
+import Education from './sections/Education';
+import Contact from './sections/Contact';
+import Navigation from './sections/Navigation';
 
-// Lazy load pages
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const Projects = lazy(() => import('./pages/Projects'));
-const Contact = lazy(() => import('./pages/Contact'));
-const ThankYou = lazy(() => import('./pages/ThankYou'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+gsap.registerPlugin(ScrollTrigger);
 
-const LoadingFallback = () => (
-    <div className="min-h-dvh flex items-center justify-center text-white">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+function App() {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    // Initialize Lenis smooth scrolling
+    lenisRef.current = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenisRef.current?.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Connect Lenis to GSAP ScrollTrigger
+    lenisRef.current.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenisRef.current?.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // Sync Lenis with body scroll lock
+    const observer = new MutationObserver(() => {
+      if (document.body.style.overflow === 'hidden') {
+        lenisRef.current?.stop();
+      } else {
+        lenisRef.current?.start();
+      }
+    });
+
+    observer.observe(document.body, { attributes: true, attributeFilter: ['style'] });
+
+    return () => {
+      lenisRef.current?.destroy();
+      observer.disconnect();
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
+  }, []);
+
+  return (
+    <div className="relative min-h-screen bg-[#010208] overflow-x-hidden">
+      {/* Noise overlay */}
+      <div className="noise-overlay" />
+
+      {/* Navigation */}
+      <Navigation />
+
+      {/* Main content */}
+      <main>
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Education />
+        <Contact />
+      </main>
     </div>
-);
-
-const App: React.FC = () => {
-    return (
-        <Router>
-            <div className="min-h-dvh text-white bg-[#111111]">
-                <Header />
-                <main>
-                    <Suspense fallback={<LoadingFallback />}>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/projects" element={<Projects />} />
-                            <Route path="/contact" element={<Contact />} />
-                            <Route path="/thank-you" element={<ThankYou />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </Suspense>
-                </main>
-                <Footer />
-            </div>
-        </Router>
-    );
+  );
 }
 
 export default App;
